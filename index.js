@@ -1,11 +1,14 @@
 const express = require('express')
+var morgan = require('morgan')
 const app = express()
 
 const generateId = () => {
     return Math.floor(Math.random()*1000000)
 }
 
+morgan.token('body', (req, res) => {return JSON.stringify(req.body)})
 app.use(express.json())
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 let persons = [
   {
